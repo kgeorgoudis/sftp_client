@@ -1,0 +1,18 @@
+namespace: tsimouha
+name: sftp_client
+version: 1.0.0
+readme: README.md
+authors:
+- tsimouha <kgeor@blacklines.gr>
+description: sftp client collection
+license:
+- GPL-3.0-or-later
+tags:
+  - tsimouha
+  - sftp
+dependencies: {}
+repository: https://github.com/tsimouha/sftp_client
+documentation: https://github.com/tsimouha/sftp_client/README.md
+homepage: https://github.com/tsimouha/sftp_client
+issues: https://github.com/tsimouha/sftp_client/issues
+build_ignore: []
