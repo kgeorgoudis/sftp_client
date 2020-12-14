@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-# Copyright: (c) 2020, Konstantinos Georgoudis <kgeor@blacklines.gr>
+# Copyright: (c) 2020, Konstantinos Georgoudis <kgeorgoudis@icloud.com>
 # GNU General Public License v3.0+ (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 from __future__ import absolute_import, division, print_function
 
@@ -71,7 +71,7 @@ requirements:
     paramiko>=2.7.2
 
 author:
-    - Konstantinos Georgoudis (@tsimouha)
+    - Konstantinos Georgoudis @kgeorgoudis
 '''
 
 EXAMPLES = r'''

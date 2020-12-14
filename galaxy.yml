@@ -1,9 +1,9 @@
-namespace: tsimouha
+namespace: kgeorgoudis
 name: sftp_client
 version: 1.0.0
 readme: README.md
 authors:
-- tsimouha <kgeor@blacklines.gr>
+- Konstantinos Georgoudis <kgeorgoudis@icloud.com>
 description: sftp client collection
 license:
 - GPL-3.0-or-later
