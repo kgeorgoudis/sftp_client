@@ -132,10 +132,6 @@ def sftp_key_session(module, host, username, port, private_key_path, private_key
         sftp = paramiko.SFTPClient.from_transport(transport)
     except Exception as e:
         module.fail_json(msg="Failed to connect on remote sftp host: %s" % e)
-        if sftp is not None:
-            sftp.close()
-        if transport is not None:
-            transport.close()
         pass
 
     return sftp
