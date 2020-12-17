@@ -37,7 +37,7 @@ jobs:
         python -m pip install pycodestyle
         python -m pip install voluptuous
         python -m pip install pylint
-        python -m pip install coverage
+        python -m pip install coverage==4.5.4
         python -m pip install yamllint
         python -m pip install ansible
         ansible --version
