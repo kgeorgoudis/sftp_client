@@ -31,7 +31,6 @@ options:
             - E.g. filename.txt or *.csv or ADD_????????_export.csv
         required: true
         type: str
-        default: "*"
     host:
         description:
             - The IP address or the FQDN of the remote sftp host
@@ -40,7 +39,6 @@ options:
     port:
         description:
             - The TCP port of the remote sftp host. The default port is 22
-        required: true
         type: int
         default: 22
     username:
@@ -50,7 +48,7 @@ options:
         type: str
     method:
         description:
-            - Choose authentication method:
+            - Choose authentication method between "password" or "private_key"
         choices: [ 'password', 'private_key' ]
         type: str
         required: true
@@ -65,15 +63,16 @@ options:
         type: path
     private_key_type:
         description:
-            - Private key type: DSA, RSA
-        choices: [ DSA, RSA ]
+            - Private key type "DSA" or "RSA"
+        choices: [ 'DSA', 'RSA' ]
+        type: str
         required: false
 
 requirements:
-    paramiko>=2.7.2
+- paramiko
 
 author:
-    - Konstantinos Georgoudis @kgeorgoudis
+    - Konstantinos Georgoudis (@kgeorgoudis)
 '''
 
 EXAMPLES = r'''
@@ -122,7 +121,7 @@ def sftp_password_session(module, host, port, username, password):
     return sftp
 
 
-def sftp_key_session(module, host, port, username, private_key_type, private_key_path):
+def sftp_key_session(module, host, username, port, private_key_path, private_key_type):
     try:
         transport = paramiko.Transport(host, port)
         if private_key_type == "DSA":
@@ -145,10 +144,10 @@ def sftp_key_session(module, host, port, username, private_key_type, private_key
 def main():
     module = AnsibleModule(
         argument_spec=dict(
-            path=dict(type='path', required=True, aliases=['name']),
-            pattern=dict(type='str', default='*', required=True),
+            path=dict(type='path', required=True),
+            pattern=dict(type='str', required=True),
             host=dict(type='str', required=True),
-            port=dict(type='int', default=22, required=True),
+            port=dict(type='int', default=22),
             username=dict(type='str', required=True),
             method=dict(type='str', choices=['password', 'private_key'], required=True),
             password=dict(type='str', no_log=True, required=False),
