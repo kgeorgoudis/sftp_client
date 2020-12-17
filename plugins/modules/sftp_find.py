@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/python
 # -*- coding: utf-8 -*-
 
 # Copyright: (c) 2020, Konstantinos Georgoudis <kgeorgoudis@icloud.com>
@@ -86,7 +86,7 @@ EXAMPLES = r'''
     password: "somepassword"
     method: "password"
   delegate_to: localhost
-  
+
 '''
 
 import os
