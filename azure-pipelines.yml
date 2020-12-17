@@ -41,7 +41,7 @@ jobs:
         python -m pip install pylint
         python -m pip install coverage
         python -m pip install yamllint
-        python -m pip install ansible==v2.9.0
+        python -m pip install ansible
         ansible --version
       displayName: 'Install Ansible'
     - script: |
