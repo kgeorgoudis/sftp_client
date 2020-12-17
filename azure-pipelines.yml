@@ -49,3 +49,8 @@ jobs:
       displayName: 'Sanity lint'
     - script: ansible-test sanity --python $(python.version) --coverage
       displayName: 'Sanity coverage'
+    - task: PublishTestResults@2
+      condition: succeededOrFailed()
+      inputs:
+        testResultsFiles: 'tests/output/coverage/*'
+        testRunTitle: 'Publish test results for Python $(python.version)'
