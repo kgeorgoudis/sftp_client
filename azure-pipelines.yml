@@ -47,10 +47,12 @@ jobs:
       displayName: 'Install dependencies'
     - script: ansible-test sanity --python $(python.version) --lint
       displayName: 'Sanity lint'
-    - script: ansible-test sanity --python $(python.version) --coverage
+    - script: |
+        ansible-test sanity --python $(python.version) --coverage
+        ansible-test coverage xml
       displayName: 'Sanity coverage'
     - task: PublishTestResults@2
       condition: succeededOrFailed()
       inputs:
-        testResultsFiles: 'tests/output/coverage/*'
+        testResultsFiles: 'tests/output/reports/coverage.xml'
         testRunTitle: 'Publish test results for Python $(python.version)'
