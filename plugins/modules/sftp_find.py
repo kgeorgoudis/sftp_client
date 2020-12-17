@@ -29,6 +29,7 @@ options:
         description:
             - You can choose a filename, or wildcard ending with file extension
             - E.g. filename.txt or *.csv or ADD_????????_export.csv
+        required: true
         type: str
         default: "*"
     host:
@@ -39,6 +40,7 @@ options:
     port:
         description:
             - The TCP port of the remote sftp host. The default port is 22
+        required: true
         type: int
         default: 22
     username:
@@ -49,12 +51,12 @@ options:
     method:
         description:
             - Choose authentication method:
-        choices: [ password, private_key ]
+        choices: [ 'password', 'private_key' ]
+        type: str
         required: true
     password:
         description:
             - Password for the sftp connection
-        required: true
         type: str
     private_key_path:
         description:
@@ -144,9 +146,9 @@ def main():
     module = AnsibleModule(
         argument_spec=dict(
             path=dict(type='path', required=True, aliases=['name']),
-            pattern=dict(type='str', required=True),
+            pattern=dict(type='str', default='*', required=True),
             host=dict(type='str', required=True),
-            port=dict(type='int', required=True),
+            port=dict(type='int', default=22, required=True),
             username=dict(type='str', required=True),
             method=dict(type='str', choices=['password', 'private_key'], required=True),
             password=dict(type='str', no_log=True, required=False),
