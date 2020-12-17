@@ -46,5 +46,5 @@ jobs:
         pip install -r requirements.txt
       displayName: 'Install dependencies'
     - script: |
-        ansible-test sanity --lint
+        ansible-test sanity --python $(python.version) --lint
       displayName: 'Sanity lint'
