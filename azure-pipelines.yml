@@ -52,11 +52,17 @@ jobs:
         ansible-test sanity --coverage --python $(python.version)
         ansible-test coverage xml
       displayName: 'Run Code Coverage'
-    - task: PublishTestResults@2
+    #- task: PublishTestResults@2
+    #  inputs:
+    #    testResultsFormat: 'JUnit'
+    #    testResultsFiles: 'tests/output/reports/coverage.xml'
+    #    testRunTitle: 'Publish Test Results'
+    - task: PublishCodeCoverageResults@1
       inputs:
-        testResultsFormat: 'JUnit'
-        testResultsFiles: 'tests/output/reports/coverage.xml'
+        codeCoverageTool: 'Cobertura'
+        summaryFileLocation: 'tests/output/reports/coverage.xml'
         testRunTitle: 'Publish Test Results'
+
 
 #    - script: bash <(curl -s https://codecov.io/bash)
 #      displayName: 'Upload to codecov.io'
