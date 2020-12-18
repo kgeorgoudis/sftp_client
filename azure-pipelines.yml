@@ -47,17 +47,7 @@ jobs:
       displayName: 'Install dependencies'
     - script: ansible-test sanity --python $(python.version) --lint
       displayName: 'Sanity lint'
-    - script: |
-        ansible-test sanity --python $(python.version) --coverage
-        ansible-test coverage xml
+    - script: ansible-test sanity --python $(python.version) --coverage
       displayName: 'Sanity coverage'
-    - task: PublishTestResults@2
-      condition: succeededOrFailed()
-      inputs:
-        testResultsFiles: 'tests/output/reports/coverage.xml'
-        testRunTitle: 'Publish test results for Python $(python.version)'
-    - task: PublishCodeCoverageResults@1
-      inputs:
-        codeCoverageTool: Cobertura
-        summaryFileLocation: '$(System.DefaultWorkingDirectory)/**/coverage.xml'
-        reportDirectory: '$(System.DefaultWorkingDirectory)/**/htmlcov'
+    - script: bash <(curl -s https://codecov.io/bash)
+      displayName: 'Upload to codecov.io'
