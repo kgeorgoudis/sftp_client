@@ -1,4 +1,5 @@
 [![Build Status](https://dev.azure.com/kgeorgoudis/sftp_client/_apis/build/status/kgeorgoudis.sftp_client?branchName=main)](https://dev.azure.com/kgeorgoudis/sftp_client/_build/latest?definitionId=1&branchName=main)
+[![codecov](https://codecov.io/gh/kgeorgoudis/sftp_client/branch/main/graph/badge.svg?token=6Y2OP8IYZJ)](https://codecov.io/gh/kgeorgoudis/sftp_client)
 
 # Introduction 
 TODO: This project contains sftp client modules.
@@ -14,7 +15,7 @@ TODO: Guide users through getting your code up and running on their own system. 
 ansible-galaxy collection install tsimouha.sftp_client
 ``` 
 #### Software dependencies
-```buildoutcfg
+```
 python -m pip install paramiko
 ```
 
