@@ -45,9 +45,17 @@ jobs:
     - script: |
         pip install -r requirements.txt
       displayName: 'Install dependencies'
-    - script: ansible-test sanity --python $(python.version) --lint
-      displayName: 'Sanity lint'
-    - script: ansible-test sanity --python $(python.version) --coverage
-      displayName: 'Sanity coverage'
-    - script: bash <(curl -s https://codecov.io/bash)
-      displayName: 'Upload to codecov.io'
+    - script: ansible-test sanity --docker -v --python $(python.version)
+      displayName: 'Run all sanity tests'
+    - script: |
+        ansible-test coverage erase
+        ansible-test sanity --coverage
+        ansible-test coverage xml
+    - task: PublishTestResults@2
+      inputs:
+        testResultsFormat: 'JUnit'
+        testResultsFiles: 'tests/output/coverage/*'
+        testRunTitle: 'Publish Test Results'
+
+#    - script: bash <(curl -s https://codecov.io/bash)
+#      displayName: 'Upload to codecov.io'
