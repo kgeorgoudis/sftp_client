@@ -49,7 +49,7 @@ jobs:
       displayName: 'Run all Sanity Tests'
     - script: |
         ansible-test coverage erase
-        ansible-test sanity --coverage
+        ansible-test sanity --coverage --python $(python.version)
         ansible-test coverage xml
       displayName: 'Run Code Coverage'
     - task: PublishTestResults@2
