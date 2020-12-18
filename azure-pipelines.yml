@@ -45,7 +45,7 @@ jobs:
     - script: |
         pip install -r requirements.txt
       displayName: 'Install dependencies'
-    - script: ansible-test sanity --docker -v --python $(python.version)
+    - script: ansible-test sanity -v --python $(python.version)
       displayName: 'Run all sanity tests'
     - script: |
         ansible-test coverage erase
