@@ -44,17 +44,18 @@ jobs:
       displayName: 'Install Ansible'
     - script: |
         pip install -r requirements.txt
-      displayName: 'Install dependencies'
+      displayName: 'Install Dependencies'
     - script: ansible-test sanity -v --python $(python.version)
-      displayName: 'Run all sanity tests'
+      displayName: 'Run all Sanity Tests'
     - script: |
         ansible-test coverage erase
         ansible-test sanity --coverage
         ansible-test coverage xml
+      displayName: 'Run Code Coverage'
     - task: PublishTestResults@2
       inputs:
         testResultsFormat: 'JUnit'
-        testResultsFiles: 'tests/output/coverage/*'
+        testResultsFiles: 'tests/output/reports/coverage.xml'
         testRunTitle: 'Publish Test Results'
 
 #    - script: bash <(curl -s https://codecov.io/bash)
