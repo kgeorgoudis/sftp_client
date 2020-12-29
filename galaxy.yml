@@ -9,7 +9,7 @@ license:
 - GPL-3.0-or-later
 tags:
   - kgeorgoudis
-  - sftp client
+  - sftp_client
   - sftp
   - paramiko
 dependencies: {}
