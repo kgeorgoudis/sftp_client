@@ -1,4 +1,3 @@
-[![Ansible Role](https://shields.api-test.nl/ansible/role/kgeorgoudis.sftp_client)](https://galaxy.ansible.com/kgeorgoudis/sftp_client)
 [![Build Status](https://dev.azure.com/kgeorgoudis/sftp_client/_apis/build/status/kgeorgoudis.sftp_client?branchName=main)](https://dev.azure.com/kgeorgoudis/sftp_client/_build/latest?definitionId=1&branchName=main)
 [![codecov](https://codecov.io/gh/kgeorgoudis/sftp_client/branch/main/graph/badge.svg?token=6Y2OP8IYZJ)](https://codecov.io/gh/kgeorgoudis/sftp_client)
 
@@ -13,7 +12,7 @@ TODO: Guide users through getting your code up and running on their own system. 
 ---
 #### Installation process: 
 ``` 
-ansible-galaxy collection install tsimouha.sftp_client
+ansible-galaxy collection install kgeorgoudis.sftp_client
 ``` 
 #### Software dependencies
 ```
