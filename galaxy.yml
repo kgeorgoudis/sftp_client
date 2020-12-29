@@ -1,6 +1,6 @@
 namespace: kgeorgoudis
 name: sftp_client
-version: 1.0.0
+version: 1.0.1
 readme: README.md
 authors:
 - Konstantinos Georgoudis <kgeorgoudis@icloud.com>
@@ -8,11 +8,13 @@ description: sftp client collection
 license:
 - GPL-3.0-or-later
 tags:
-  - tsimouha
+  - kgeorgoudis
+  - sftp client
   - sftp
+  - paramiko
 dependencies: {}
-repository: https://github.com/tsimouha/sftp_client
-documentation: https://github.com/tsimouha/sftp_client/README.md
-homepage: https://github.com/tsimouha/sftp_client
-issues: https://github.com/tsimouha/sftp_client/issues
+repository: https://github.com/kgeorgoudis/sftp_client
+documentation: https://github.com/kgeorgoudis/sftp_client/blob/main/README.md
+homepage: https://github.com/kgeorgoudis/sftp_client
+issues: https://github.com/kgeorgoudis/sftp_client/issues
 build_ignore: []
