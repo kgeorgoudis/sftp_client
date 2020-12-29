@@ -27,10 +27,12 @@ jobs:
     steps:
     - checkout: self
       path: $(collection_path)/$(Build.Repository.Name)
+
     - task: UsePythonVersion@0
       inputs:
         versionSpec: '$(python.version)'
       displayName: 'Use Python $(python.version)'
+
     - script: |
         python -m pip install --upgrade pip
         python -m pip install wheel
@@ -42,20 +44,52 @@ jobs:
         python -m pip install ansible
         ansible --version
       displayName: 'Install Ansible'
+
     - script: |
         pip install -r requirements.txt
       displayName: 'Install Dependencies'
+
     - script: ansible-test sanity -v --python $(python.version)
       displayName: 'Run all Sanity Tests'
+
     - script: |
         ansible-test coverage erase
         ansible-test sanity --coverage --python $(python.version)
         ansible-test coverage xml
       displayName: 'Run Code Coverage'
+
     - task: PublishCodeCoverageResults@1
       inputs:
         codeCoverageTool: 'Cobertura'
         summaryFileLocation: 'tests/output/reports/coverage.xml'
         testRunTitle: 'Publish Test Results'
+
     - script: bash <(curl -s https://codecov.io/bash)
       displayName: 'Upload to codecov.io'
+
+  - job: Build
+    pool:
+      vmImage: 'ubuntu-latest'
+    steps:
+    - task: UsePythonVersion@0
+      inputs:
+        versionSpec: 3.9
+      displayName: 'Use Python 3.9'
+
+    - checkout: self
+      path: $(collection_path)/$(Build.Repository.Name)
+
+    - script: |
+        python -m pip install --upgrade pip
+        python -m pip install wheel
+        python -m pip install ansible
+        ansible --version
+      displayName: 'Install Ansible'
+
+    - script: ansible-galaxy collection build --output-path build
+      displayName: 'Build Collection'
+
+    - task: PublishPipelineArtifact@1
+      inputs:
+        targetPath: '$(Pipeline.Workspace)/build'
+        publishLocation: 'pipeline'
