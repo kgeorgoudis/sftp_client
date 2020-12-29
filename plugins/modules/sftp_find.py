@@ -105,36 +105,41 @@ except ImportError:
     LIB_IMP_ERR = traceback.format_exc()
 
 
-def sftp_password_session(module, host, port, username, password):
-    try:
-        transport = paramiko.Transport(host, port)
-        transport.connect(username=username, password=password)
-        sftp = paramiko.SFTPClient.from_transport(transport)
-    except Exception as e:
-        module.fail_json(msg="Failed to connect on remote sftp host: %s" % e)
-        if sftp is not None:
-            sftp.close()
-        if transport is not None:
-            transport.close()
-        pass
-
-    return sftp
-
-
-def sftp_key_session(module, host, username, port, private_key_path, private_key_type):
-    try:
-        transport = paramiko.Transport(host, port)
-        if private_key_type == "DSA":
-            key = paramiko.DSSKey.from_private_key_file(private_key_path)
-        else:
-            key = paramiko.RSAKey.from_private_key(private_key_path)
-        transport.connect(username=username, pkey=key)
-        sftp = paramiko.SFTPClient.from_transport(transport)
-    except Exception as e:
-        module.fail_json(msg="Failed to connect on remote sftp host: %s" % e)
-        pass
-
-    return sftp
+def sftp_session(module, host, port, username, password, private_key_path, private_key_type, method):
+    sftp = None
+    key = None
+    transport = None
+    if method == 'private_key':
+        try:
+            if private_key_path is not None:
+                if private_key_type == 'DSA':
+                    key = paramiko.DSSKey.from_private_key_file(private_key_path)
+                else:
+                    key = paramiko.RSAKey.from_private_key_file(private_key_path)
+            transport = paramiko.Transport(host, port)
+            transport.connect(None, username, password, key)
+            sftp = paramiko.SFTPClient.from_transport(transport)
+            return sftp
+        except Exception as e:
+            module.fail_json(msg="Failed to connect on remote sftp host: %s" % e)
+            if sftp is not None:
+                sftp.close()
+            if transport is not None:
+                transport.close()
+            pass
+    else:
+        try:
+            transport = paramiko.Transport(host, port)
+            transport.connect(None, username, password)
+            sftp = paramiko.SFTPClient.from_transport(transport)
+            return sftp
+        except Exception as e:
+            module.fail_json(msg="Failed to connect on remote sftp host: %s" % e)
+            if sftp is not None:
+                sftp.close()
+            if transport is not None:
+                transport.close()
+            pass
 
 
 def main():
@@ -167,18 +172,15 @@ def main():
     host = params['host']
     port = params['port']
     username = params['username']
-    password = params['password']
     method = params['method']
+    password = params['password']
     private_key_path = params['private_key_path']
     private_key_type = params['private_key_type']
 
     if not PARAMIKO_AVAILABLE:
-        module.fail_json(msg=missing_required_lib("paramiko"), exception=LIB_IMP_ERR)
+        module.fail_json(msg=missing_required_lib('paramiko'), exception=LIB_IMP_ERR)
 
-    if method == "password":
-        sftp = sftp_password_session(module, host, port, username, password)
-    else:
-        sftp = sftp_key_session(module, host, username, port, private_key_path, private_key_type)
+    sftp = sftp_session(module, host, port, username, method, password, private_key_path, private_key_type)
 
     for file in sftp.listdir(path):
         looked += 1
