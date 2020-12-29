@@ -105,7 +105,7 @@ except ImportError:
     LIB_IMP_ERR = traceback.format_exc()
 
 
-def sftp_session(module, host, port, username, password, private_key_path, private_key_type, method):
+def sftp_session(module, host, port, username, method, password, private_key_path, private_key_type):
     sftp = None
     key = None
     transport = None
