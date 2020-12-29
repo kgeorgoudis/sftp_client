@@ -68,6 +68,8 @@ jobs:
       displayName: 'Upload to codecov.io'
 
   - job: Build
+    dependsOn: Validate
+    condition: succeeded()
     pool:
       vmImage: 'ubuntu-latest'
     steps:
@@ -91,5 +93,5 @@ jobs:
 
     - task: PublishPipelineArtifact@1
       inputs:
-        targetPath: '$(Pipeline.Workspace)/build'
+        targetPath: build
         publishLocation: 'pipeline'
