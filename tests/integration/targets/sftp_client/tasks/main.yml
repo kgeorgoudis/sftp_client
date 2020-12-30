@@ -1,0 +1,17 @@
+---
+- name: Find files on sftp server
+  sftp_find:
+    path: "{{ path }}"
+    pattern: "{{ pattern }}"
+    host: "{{ host }}"
+    username: "{{ username }}"
+    password: "{{ password }}"
+    method: "{{ method }}"
+  tags: test
+  register: result
+
+- assert:
+    that:
+      - result is success
+      - result is not changed
+      - "result.examined > 0"
