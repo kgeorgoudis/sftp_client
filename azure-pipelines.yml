@@ -36,6 +36,7 @@ jobs:
         python -m pip install pylint
         python -m pip install coverage==4.5.4
         python -m pip install yamllint
+        python -m pip install junit_xml
         python -m pip install ansible
         ansible --version
       displayName: 'Install Ansible'
@@ -46,6 +47,26 @@ jobs:
 
     - script: ansible-test sanity -v --python $(python.version)
       displayName: 'Run all Sanity Tests'
+
+    - script: |
+        echo "path: \"$(SFTP_PATH)\"" >> tests/integration/integration_config.yml
+        echo "pattern: \"$(SFTP_PATTERN)\"" >> tests/integration/integration_config.yml
+        echo "host: \"$(SFTP_HOSTNAME)\"" >> tests/integration/integration_config.yml
+        echo "username: \"$(SFTP_USERNAME)\"" >> tests/integration/integration_config.yml
+        echo "password: \"$(SFTP_PASSWORD)\"" >> tests/integration/integration_config.yml
+        echo "method: \"$(SFTP_METHOD)\"" >> tests/integration/integration_config.yml
+        echo "private_key_path: \"$(SFTP_PRIVATE_KEY_PATH)\"" >> tests/integration/integration_config.yml
+        echo "private_key_type: \"$(SFTP_PRIVATE_KEY_TYPE)\"" >> tests/integration/integration_config.yml
+      displayName: 'Prepare Integration Tests'
+
+    - script: ansible-test integration --python $(python.version)
+      displayName: 'Run Integration Tests'
+
+    - task: PublishTestResults@2
+      inputs:
+        testResultsFormat: 'JUnit'
+        testResultsFiles: 'tests/output/junit/*.xml'
+        mergeTestResults: true
 
     - script: |
         ansible-test coverage erase
